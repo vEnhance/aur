@@ -1,7 +1,7 @@
 pkgname=python-grilops
 _name=${pkgname#python-}
-pkgver=0.9.1
-pkgrel=2
+pkgver=0.10.3
+pkgrel=1
 pkgdesc='GRId LOgic Puzzle Solver'
 arch=(any)
 url=https://github.com/obijywk/grilops
@@ -10,7 +10,7 @@ depends=(python python-z3-solver)
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz"
   LICENSE)
-sha256sums=('b078394eadcabe6aaef1fc3c6d1c9c341214c778a812364ea79f2e5904365d5b'
+sha256sums=('ee0871b402cf7be43a40314e7e8f4280f930ca413e0cb9533188b024e240d2e7'
   '7161cd1ef6b37818a00e227eadcbf69472f89978754145f3904d1e6d53dfc282')
 
 build() {
