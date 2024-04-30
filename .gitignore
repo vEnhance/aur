@@ -1,0 +1,7 @@
+**/*.tar*
+**/*.deb
+**/*~
+**/src
+**/pkg
+apikeys.ini
+new.txt
