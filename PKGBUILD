@@ -1,4 +1,5 @@
-# Maintainer: Hugo Osvaldo Barrera <hugo@barrera.io>
+# Maintainer: neeshy <neeshy@tfwno.gf>
+# Contributor: Hugo Osvaldo Barrera <hugo@barrera.io>
 # Contributor: Kevin Puertas <kevinpr@jkanetwork.com>
 # Contributor: Nascher <kevin@nascher.org>
 # Contributor: Artefact2 <artefact2@gmail.com>
@@ -10,51 +11,57 @@
 # Contributor: Carlos Solis <csolisr at gmail dot com>
 
 pkgname=stepmania
-pkgver=5.0.12
-pkgrel=3
-pkgdesc='A free dance and rhythm game (was previously sm-ssc)'
-url='http://www.stepmania.com/'
-license=('MIT')
-arch=(i686 x86_64)
-depends=('gtk2' 'libmad' 'mesa' 'glew' 'libpng' 'libvorbis' 'harfbuzz')
-replaces=('sm-ssc')
-makedepends=('pkgconfig' 'yasm' 'cmake' 'git')
-install='stepmania.install'
-source=(stepmania.sh
-        stepmania.install
-        $pkgname-$pkgver.tar.gz::https://github.com/stepmania/stepmania/archive/v$pkgver.tar.gz
-	0001-GtkModule-Add-harfbuzz-dependency.patch
-	0002-MessagemanCrashPatch.patch)
-sha256sums=('addfbc088b9b700330ab633d1b2786fc723d00357e4ad738dd5f92ceab33e29e'
-            '52badaf74204e3fe0ff626b08510a2a0cdf82fa58e7afd2f1a5149a5d26ace25'
-            'df79bcadd69d4ed60cf560d45386ec275181343495ffd744c3ff8f73c83d4755'
-            'b383574c0c7ecabdf75aabd0bd794191aa8f981e0189748d7d58422dbdbe8dfc'
-            'c5a6aaae04040b67acd54876c5bc4a6f42529b8f4b41062a92e391f0d7ffa54e')
+_pkgver=d55acb1ba26f1c5b5e3048d6d6c0bd116625216f
+pkgver=5.1.0.b2.r627.d55acb1ba2
+pkgrel=1
+pkgdesc="Advanced rhythm game. Designed for both home and arcade use."
+arch=(x86_64)
+url="http://www.stepmania.com/"
+license=('MIT AND CC-BY-NC-4.0')
+depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' 'libxrandr'
+         'alsa-lib' 'libpulse' 'ffmpeg' 'libmad' 'libogg' 'libvorbis' 'libjpeg' 'libpng'
+         'gtk3' 'libtommath' 'libtomcrypt' 'jsoncpp' 'pcre' 'zlib')
+makedepends=('cmake' 'nasm')
+source=("https://github.com/stepmania/stepmania/archive/$_pkgver.tar.gz"
+        "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+        "stepmania.sh")
+sha256sums=('7d0e0d4b13f780fc6181561b257d9cd8a3ef73df513f4b8f36743acebb63a130'
+            'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
+            '6b379ff7f8aa341eb1557a82c1acd5bbe64a91344bd1c3965ce07ed0ebf135d2')
 
 prepare() {
-	cd "$srcdir/$pkgname-$pkgver/"
-	patch --forward -p1 --input="${srcdir}/0001-GtkModule-Add-harfbuzz-dependency.patch"
-	patch --forward -p1 --input="${srcdir}/0002-MessagemanCrashPatch.patch"
+  cd "$srcdir/$pkgname-$_pkgver"
+  patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
 }
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver/Build"
-  cmake -D WITH_SYSTEM_FFMPEG=Off -DWITH_MINIMAID=OFF ..
+  cd "$srcdir/$pkgname-$_pkgver/Build"
+  cmake \
+    -DCMAKE_INSTALL_PREFIX=/opt \
+    -DWITH_FULL_RELEASE=YES \
+    -DWITH_PORTABLE_TOMCRYPT=NO \
+    -DWITH_SYSTEM_FFMPEG=YES \
+    -DWITH_SYSTEM_MAD=YES \
+    -DWITH_SYSTEM_OGG=YES \
+    -DWITH_SYSTEM_JPEG=YES \
+    -DWITH_SYSTEM_PNG=YES \
+    -DWITH_SYSTEM_GLEW=YES \
+    -DWITH_SYSTEM_TOMMATH=YES \
+    -DWITH_SYSTEM_TOMCRYPT=YES \
+    -DWITH_SYSTEM_JSONCPP=YES \
+    -DWITH_SYSTEM_PCRE=YES \
+    -DWITH_SYSTEM_ZLIB=YES \
+    ..
   make
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/$pkgname-$_pkgver"
+  make -C Build DESTDIR="$pkgdir" install
 
-  install -d "$pkgdir/opt/$pkgname/"{RandomMovies,Packages}
-  install -t "$pkgdir/opt/$pkgname/" stepmania GtkModule.so
-  install -D "$srcdir/$pkgname.sh" "$pkgdir/usr/bin/$pkgname"
-  install -D "$pkgname.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
- 
-  cp -r -t "$pkgdir/opt/$pkgname/" Announcers BGAnimations BackgroundEffects \
-     BackgroundTransitions Characters Courses Data Docs NoteSkins Scripts \
-     Songs Themes
+  install -Dm755 "$srcdir/stepmania.sh" "$pkgdir/usr/bin/stepmania"
+  install -Dm644 stepmania.desktop "$pkgdir/usr/share/applications/stepmania.desktop"
 
-  install -D -m644 Docs/Licenses.txt "$pkgdir/usr/share/licenses/$pkgname/Licenses.txt"
-  cp -ar icons "$pkgdir/usr/share/"
+  install -Dm644 Docs/Licenses.txt "$pkgdir/usr/share/licenses/$pkgname/Licenses.txt"
+  cp -a icons "$pkgdir/usr/share"
 }
