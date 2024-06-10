@@ -1,4 +1,5 @@
-# Maintainer: xiretza <xiretza+aur@gmail.com>
+# Maintainer: Evan Chen <evan@evanchen.cc>
+# Contributor: xiretza <xiretza+aur@gmail.com>
 # Contributor: Luca Weiss <luca (at) z3ntu (dot) xyz>
 # Contributor: Evgeniy Alekseev <arcanis at archlinux dot org>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski at archlinux dot org>
@@ -6,7 +7,7 @@
 # Contributor: moostik <mooostik at gmail dot com>
 
 pkgname=geogebra-5
-pkgver=5.2.840.0
+pkgver=5.2.843.0
 pkgrel=1
 pkgdesc="Dynamic mathematics software with interactive graphics, algebra and spreadsheet"
 arch=('any')
@@ -16,12 +17,12 @@ depends=('hicolor-icon-theme' 'java-runtime=11' 'xdg-utils')
 provides=("${pkgname//-5/}")
 conflicts=("${pkgname//-5/}")
 source=("https://download.geogebra.org/installers/5.2/GeoGebra-Linux-Portable-${pkgver//./-}.tar.bz2"
-        "geogebra-logo.svg"
-        "geogebra"
-        "geogebra.desktop"
-        "geogebra-mime.xml")
+  "geogebra-logo.svg"
+  "geogebra"
+  "geogebra.desktop"
+  "geogebra-mime.xml")
 
-sha512sums=('b94267b4dde20300970cf7c3e8715871b0eb3f4c40d45b18efa46bbb08b9edee3891c1274b79524bbcf407b5a6e6b2218dcec3967b3852026bfead183babdbe3'
+sha512sums=('075bba7d553fe66214b66cf6be5a1008f224aad0f74b490c98ab95f9cdc073cf61200a8c954d4fd67e2fcab48fe2b767633b8fe3ce73403c8a3eac8fd3f9be3b'
             'a946acb8867f497c68ce6f8fff8172da4a43a9ca118aafcc5ac414318fd52c4bc6ada387bdfa296f0ff2e1d7411ae345b61197b4adaa3f54299aab837647df55'
             'b6afe20e4e4ec74f05a19a1df908869b3fe2a9dae48d7b5dc8d8679d534f2356897a5ad08dbb3e9be38e2c450a900fae9ad729e6e3a5c6fbb48452d970406a0c'
             '64954e749dcd8a9233a932718a4722aab5dfcde868d93998b64f79d54e51c2c34b545665f191f041455f1e945fa46b273417089981d6dff8ed8256519f7e8ae6'
