@@ -9,7 +9,6 @@
 # Contributor: Stefan Lohmaier <noneuss at gmail dot com>
 # Contributor: ZipFile <lin.aaa.lin@gmail.com>
 # Contributor: Carlos Solis <csolisr at gmail dot com>
-
 pkgname=stepmania
 _pkgver=d55acb1ba26f1c5b5e3048d6d6c0bd116625216f
 pkgver=5.1.0.b2.r627.d55acb1ba2
