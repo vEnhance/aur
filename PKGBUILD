@@ -12,7 +12,7 @@
 pkgname=stepmania
 _pkgver=d55acb1ba26f1c5b5e3048d6d6c0bd116625216f
 pkgver=5.1.0.b2.r627.d55acb1ba2
-pkgrel=1
+pkgrel=2
 pkgdesc="Advanced rhythm game. Designed for both home and arcade use."
 arch=(x86_64)
 url="http://www.stepmania.com/"
@@ -23,14 +23,17 @@ depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' '
 makedepends=('cmake' 'nasm')
 source=("https://github.com/stepmania/stepmania/archive/$_pkgver.tar.gz"
         "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+        "ffmpeg-7.patch"
         "stepmania.sh")
 sha256sums=('7d0e0d4b13f780fc6181561b257d9cd8a3ef73df513f4b8f36743acebb63a130'
             'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
+            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
             '6b379ff7f8aa341eb1557a82c1acd5bbe64a91344bd1c3965ce07ed0ebf135d2')
 
 prepare() {
   cd "$srcdir/$pkgname-$_pkgver"
   patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+  patch -Np1 -i "$srcdir/ffmpeg-7.patch"
 }
 
 build() {
