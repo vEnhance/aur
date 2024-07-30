@@ -1,0 +1,25 @@
+From 14da0fad3036333c715e74b635afd6c1e8515645 Mon Sep 17 00:00:00 2001
+From: Evan Chen <evan@evanchen.cc>
+Date: Tue, 30 Jul 2024 09:56:40 -0700
+Subject: [PATCH] Rename frame_number to frame_num
+
+---
+ src/arch/MovieTexture/MovieTexture_FFMpeg.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp b/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp
+index 3c7a4136d0..087ebe6b2f 100644
+--- a/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp
++++ b/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp
+@@ -273,7 +273,7 @@ int MovieDecoder_FFMpeg::DecodePacket( float fTargetTime )
+ 		bool bSkipThisFrame =
+ 			fTargetTime != -1 &&
+ 			GetTimestamp() + GetFrameDuration() < fTargetTime &&
+-			(m_pStreamCodec->frame_number % 2) == 0;
++			(m_pStreamCodec->frame_num % 2) == 0;
+ 
+ 		int iGotFrame;
+ 		int len;
+-- 
+2.45.2
+
