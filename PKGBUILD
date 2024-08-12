@@ -20,18 +20,21 @@ license=('MIT AND CC-BY-NC-4.0')
 depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' 'libxrandr'
          'alsa-lib' 'libpulse' 'ffmpeg' 'libmad' 'libogg' 'libvorbis' 'libjpeg' 'libpng'
          'gtk3' 'libtommath' 'libtomcrypt' 'jsoncpp' 'pcre' 'zlib')
-makedepends=('cmake' 'nasm')
+makedepends=('cmake')
 source=("https://github.com/stepmania/stepmania/archive/$_pkgver.tar.gz"
         "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-        "ffmpeg-7.patch")
+        "ffmpeg-7.patch"
+        "ffmpeg-remove-asm-requirement.patch")
 sha256sums=('7d0e0d4b13f780fc6181561b257d9cd8a3ef73df513f4b8f36743acebb63a130'
             'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
-            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068')
+            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
+            'ae8d9911eaf7680d7f05a5bafa98588a1582f9b7713a295a66603a2ca8b5addf')
 
 prepare() {
   cd "$srcdir/$pkgname-$_pkgver"
   patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
   patch -Np1 -i "$srcdir/ffmpeg-7.patch"
+  patch -Np1 -i "$srcdir/ffmpeg-remove-asm-requirement.patch"
 }
 
 build() {
@@ -51,6 +54,7 @@ build() {
     -DWITH_SYSTEM_JSONCPP=YES \
     -DWITH_SYSTEM_PCRE=YES \
     -DWITH_SYSTEM_ZLIB=YES \
+    -Wno-dev \
     ..
   make
 }
