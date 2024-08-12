@@ -1,4 +1,5 @@
-# Maintainer: Evan Chen <evan@evanchen.cc>
+# Maintainer: neeshy <neeshy@tfwno.gf>
+# Contributor: Evan Chen <evan@evanchen.cc>
 # Contributor: éclairevoyant
 # Contributor: Devin J dot  Pohly <djpohly+arch at gmail dot com>
 # Contributor: Martin Kröning <m dot kroening at hotmail dot de>
@@ -9,78 +10,71 @@
 # Contributor: Travis Nickles <ryoohki7 at yahoo dot com>
 # Contributor: Stefan Lohmaier <noneuss at gmail dot com>
 # Contributor: Dan Guzek <dguzek at gmail dot com>
-
 _pkgname=stepmania
 pkgname="$_pkgname-git"
-pkgver=5.1.0.b2.r627.d55acb1ba2
-pkgrel=3
-pkgdesc="An advanced rhythm game designed for both home and arcade use"
+pkgver=latest
+pkgrel=4
+pkgdesc="Advanced rhythm game. Designed for both home and arcade use."
 arch=(x86_64)
-url='https://www.stepmania.com'
-license=(MIT)
-depends=(ffmpeg glew gtk3 jsoncpp libmad libtomcrypt pcre)
-makedepends=(cmake git ninja)
-provides=("$_pkgname")
-conflicts=("$_pkgname")
-source=(
-  "git+https://github.com/$_pkgname/$_pkgname.git"
-  0001-remove-asm-requirement-for-ffmpeg.patch
-  0002-fix-for-ffmpeg-4.patch
-  0003-fix-for-ffmpeg-5.patch
-  0004-fix-for-ffmpeg-7.patch
-)
-b2sums=('SKIP'
-  'e69f3ef01825965079df45da54f584def00772ae24b37e4e35d8bdb337b9ea358c943981b7ab6d0b134b0a298156db5d30db250ef285f1459040ed41dec3832b'
-  '54ee2a1e5f54e915d7bed0a0b1cbceb7d01c788cb944cd4f9858f4044d40ed6fcec3c6ee460e9576188cbd40d7ca1c600fea30e5790df65927dd193e73cc0dd6'
-  '2cb7adc515a50ca85a378a705c89e0c884e6594b4f1c661ee42e8e5e54d83a9dc1b06d0f722e5dae150262b253987a69d1ad633793bd25967d934f419de171de'
-  'cd541af096b5bea2dfebbb449df756b76d147e807aa0149bc0d9316144ef5311dcffe3f40ac16d02d0d21ecc3146632687b26fda646341fd0d87f47dc5714591')
+url="http://www.stepmania.com/"
+license=('MIT AND CC-BY-NC-4.0')
+depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' 'libxrandr'
+         'alsa-lib' 'libpulse' 'ffmpeg' 'libmad' 'libogg' 'libvorbis' 'libjpeg' 'libpng'
+         'gtk3' 'libtommath' 'libtomcrypt' 'jsoncpp' 'pcre' 'zlib')
+makedepends=('cmake')
+provides=('stepmania')
+conflicts=('stepmania')
+source=("git+https://github.com/stepmania/stepmania.git"
+        "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+        "ffmpeg-7.patch"
+        "ffmpeg-remove-asm-requirement.patch")
+sha256sums=('SKIP'
+            'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
+            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
+            'ae8d9911eaf7680d7f05a5bafa98588a1582f9b7713a295a66603a2ca8b5addf')
 
 pkgver() {
-  cd $_pkgname
-  git describe --tags | sed 's/v//g;s/\([^-]*-\)g/r\1/;s/-/./g'
+  cd "$srcdir/$_pkgname"
+  git describe --long --tags | sed 's/^v//;s/\([^-]*-\)g/r\1/;s/-/./g'
 }
 
 prepare() {
-  cd $_pkgname
-
-  patch -Np1 -i ../0001-remove-asm-requirement-for-ffmpeg.patch
-  patch -Np1 -i ../0002-fix-for-ffmpeg-4.patch
-  patch -Np1 -i ../0003-fix-for-ffmpeg-5.patch
-  patch -Np1 -i ../0004-fix-for-ffmpeg-7.patch
+  cd "$srcdir/$_pkgname"
+  patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+  patch -Np1 -i "$srcdir/ffmpeg-7.patch"
+  patch -Np1 -i "$srcdir/ffmpeg-remove-asm-requirement.patch"
 }
 
 build() {
-  cmake -G Ninja -S $_pkgname -B build \
-    -DCMAKE_BUILD_TYPE=None \
-    -DCMAKE_C_FLAGS="$CPPFLAGS $CFLAGS" \
-    -DCMAKE_CXX_FLAGS="$CPPFLAGS $CXXFLAGS" \
+  cd "$srcdir/$_pkgname/Build"
+  cmake \
     -DCMAKE_INSTALL_PREFIX=/opt \
-    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
-    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-    -DWITH_SYSTEM_FFMPEG=ON \
-    -DWITH_SYSTEM_GLEW=ON \
-    -DWITH_SYSTEM_JPEG=ON \
-    -DWITH_SYSTEM_JSONCPP=ON \
-    -DWITH_SYSTEM_MAD=ON \
-    -DWITH_SYSTEM_OGG=ON \
-    -DWITH_SYSTEM_PCRE=ON \
-    -DWITH_SYSTEM_PNG=ON \
-    -DWITH_SYSTEM_TOMCRYPT=ON \
-    -DWITH_SYSTEM_TOMMATH=ON \
-    -DWITH_SYSTEM_ZLIB=ON \
-    -Wno-dev
-  cmake --build build
+    -DWITH_FULL_RELEASE=YES \
+    -DWITH_PORTABLE_TOMCRYPT=NO \
+    -DWITH_SYSTEM_FFMPEG=YES \
+    -DWITH_SYSTEM_MAD=YES \
+    -DWITH_SYSTEM_OGG=YES \
+    -DWITH_SYSTEM_JPEG=YES \
+    -DWITH_SYSTEM_PNG=YES \
+    -DWITH_SYSTEM_GLEW=YES \
+    -DWITH_SYSTEM_TOMMATH=YES \
+    -DWITH_SYSTEM_TOMCRYPT=YES \
+    -DWITH_SYSTEM_JSONCPP=YES \
+    -DWITH_SYSTEM_PCRE=YES \
+    -DWITH_SYSTEM_ZLIB=YES \
+    -Wno-dev \
+    ..
+  make
 }
 
 package() {
-  DESTDIR="$pkgdir" cmake --install build
+  cd "$srcdir/$_pkgname"
+  make -C Build DESTDIR="$pkgdir" install
 
-  install -d "$pkgdir/usr/bin/"
-  ln -s /opt/$_pkgname-5.1/$_pkgname "$pkgdir/usr/bin/$_pkgname"
+  install -dm755 "$pkgdir/usr/bin"
+  ln -s /opt/stepmania-5.1/stepmania "$pkgdir/usr/bin/stepmania"
+  install -Dm644 stepmania.desktop "$pkgdir/usr/share/applications/stepmania.desktop"
 
-  cd $_pkgname
-  install -Dm 644 $_pkgname.desktop -t "$pkgdir/usr/share/applications/"
-  install -Dm644 Docs/Licenses.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-  install -d "$pkgdir"/usr/share
-  cp -r icons "$pkgdir"/usr/share/icons
+  install -Dm644 Docs/Licenses.txt "$pkgdir/usr/share/licenses/$pkgname/Licenses.txt"
+  cp -a icons "$pkgdir/usr/share"
 }
