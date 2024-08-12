@@ -33,10 +33,8 @@ pkgbase = stepmania
 	source = https://github.com/stepmania/stepmania/archive/d55acb1ba26f1c5b5e3048d6d6c0bd116625216f.tar.gz
 	source = https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch
 	source = ffmpeg-7.patch
-	source = stepmania.sh
 	sha256sums = 7d0e0d4b13f780fc6181561b257d9cd8a3ef73df513f4b8f36743acebb63a130
 	sha256sums = fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634
 	sha256sums = f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068
-	sha256sums = 6b379ff7f8aa341eb1557a82c1acd5bbe64a91344bd1c3965ce07ed0ebf135d2
 
 pkgname = stepmania

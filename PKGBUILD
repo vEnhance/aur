@@ -23,12 +23,10 @@ depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' '
 makedepends=('cmake' 'nasm')
 source=("https://github.com/stepmania/stepmania/archive/$_pkgver.tar.gz"
         "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-        "ffmpeg-7.patch"
-        "stepmania.sh")
+        "ffmpeg-7.patch")
 sha256sums=('7d0e0d4b13f780fc6181561b257d9cd8a3ef73df513f4b8f36743acebb63a130'
             'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
-            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
-            '6b379ff7f8aa341eb1557a82c1acd5bbe64a91344bd1c3965ce07ed0ebf135d2')
+            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068')
 
 prepare() {
   cd "$srcdir/$pkgname-$_pkgver"
@@ -61,7 +59,8 @@ package() {
   cd "$srcdir/$pkgname-$_pkgver"
   make -C Build DESTDIR="$pkgdir" install
 
-  install -Dm755 "$srcdir/stepmania.sh" "$pkgdir/usr/bin/stepmania"
+  install -dm755 "$pkgdir/usr/bin"
+  ln -s /opt/stepmania-5.1/stepmania "$pkgdir/usr/bin/stepmania"
   install -Dm644 stepmania.desktop "$pkgdir/usr/share/applications/stepmania.desktop"
 
   install -Dm644 Docs/Licenses.txt "$pkgdir/usr/share/licenses/$pkgname/Licenses.txt"
