@@ -1,7 +1,7 @@
 pkgbase = geogebra-5
 	pkgdesc = Dynamic mathematics software with interactive graphics, algebra and spreadsheet
 	pkgver = 5.2.853.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://www.geogebra.org/
 	arch = any
 	license = GPL3
