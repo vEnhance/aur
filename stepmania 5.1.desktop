@@ -1,0 +1,13 @@
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=StepMania 5.1
+GenericName=Rhythm and dance game
+TryExec=/opt/stepmania-5.1/stepmania
+Exec=/opt/stepmania-5.1/stepmania
+Terminal=false
+Icon=stepmania-ssc
+Type=Application
+Categories=Application;Game;ArcadeGame
+Comment=A cross-platform rhythm video game.
+PrefersNonDefaultGPU=false
