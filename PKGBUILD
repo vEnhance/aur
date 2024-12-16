@@ -13,7 +13,7 @@
 _pkgname=stepmania
 pkgname="$_pkgname-git"
 pkgver=latest
-pkgrel=4
+pkgrel=5
 pkgdesc="Advanced rhythm game. Designed for both home and arcade use."
 arch=(x86_64)
 url="http://www.stepmania.com/"
@@ -26,12 +26,16 @@ provides=('stepmania')
 conflicts=('stepmania')
 source=("git+https://github.com/stepmania/stepmania.git"
         "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+        "https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
         "ffmpeg-7.patch"
-        "ffmpeg-remove-asm-requirement.patch")
+        "ffmpeg-remove-asm-requirement.patch"
+        "stepmania.sh")
 sha256sums=('SKIP'
             'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
+            'b04bc15cbe85a41117220fadbadce5aa0893582fa8d720697ee6b864f7f0c093'
             'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
-            'ae8d9911eaf7680d7f05a5bafa98588a1582f9b7713a295a66603a2ca8b5addf')
+            'ae8d9911eaf7680d7f05a5bafa98588a1582f9b7713a295a66603a2ca8b5addf'
+            'e2caeb91fccaba9502273fba875355b516e821e6754b2238a20cb7c31f3c4a60')
 
 pkgver() {
   cd "$srcdir/$_pkgname"
@@ -41,6 +45,7 @@ pkgver() {
 prepare() {
   cd "$srcdir/$_pkgname"
   patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+  patch -Np1 -i "$srcdir/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
   patch -Np1 -i "$srcdir/ffmpeg-7.patch"
   patch -Np1 -i "$srcdir/ffmpeg-remove-asm-requirement.patch"
 }
@@ -71,8 +76,7 @@ package() {
   cd "$srcdir/$_pkgname"
   make -C Build DESTDIR="$pkgdir" install
 
-  install -dm755 "$pkgdir/usr/bin"
-  ln -s /opt/stepmania-5.1/stepmania "$pkgdir/usr/bin/stepmania"
+  install -Dm755 "$srcdir/stepmania.sh" "$pkgdir/usr/bin/stepmania"
   install -Dm644 stepmania.desktop "$pkgdir/usr/share/applications/stepmania.desktop"
 
   install -Dm644 Docs/Licenses.txt "$pkgdir/usr/share/licenses/$pkgname/Licenses.txt"
