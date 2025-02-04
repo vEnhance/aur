@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-readarray -t PACKAGES < <(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/.*')
+readarray -t PACKAGES < <(
+  find . -type f -name '.nvchecker.toml' -printf '%h\n' | sort -u
+)
 pkgctl version check "${PACKAGES[@]}"
