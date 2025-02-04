@@ -1,7 +1,13 @@
-# Evan's AUR packages
+# Evan's PKGBUILD's
 
 Now maintained with [aurpublish](https://github.com/eli-schwartz/aurpublish).
 Still trying to learn the ropes, yell at me when I do things wrong thanks ♥️
+
+## AUR and custom PKGBUILD's
+
+Not all the packages are uploaded to AUR, some are just for my use
+(such as `nodejs-dummy-ij`).
+But anything with an `.nvchecker.toml` should be on the AUR.
 
 ## Notes to self
 
