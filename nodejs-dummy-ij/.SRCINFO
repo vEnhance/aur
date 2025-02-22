@@ -1,8 +1,9 @@
 pkgbase = nodejs-dummy-ij
 	pkgdesc = Dummy package for nodejs-lts-iron to fake provide nodejs-lts-jod
 	pkgver = 20.18.2
-	pkgrel = 1
+	pkgrel = 2
 	arch = any
 	provides = nodejs-lts-jod
+	provides = nodejs-lts
 
 pkgname = nodejs-dummy-ij

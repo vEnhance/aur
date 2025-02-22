@@ -1,9 +1,9 @@
 pkgname=nodejs-dummy-ij
 pkgver=20.18.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Dummy package for nodejs-lts-iron to fake provide nodejs-lts-jod'
 requires=('nodejs-lts-iron')
-provides=('nodejs-lts-jod')
+provides=('nodejs-lts-jod' 'nodejs-lts')
 arch=('any')
 
 build() {
