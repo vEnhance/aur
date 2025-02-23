@@ -6,11 +6,11 @@
 # Contributor : Markus Meissner <markus@meissna.de>
 # Contributor : Nick Erdmann <erdmann@date.upb.de>
 
-pkgname=nethack-qt-geoduck
+pkgname=nethack-qt-geoduck-tiles
 _pkgname=nethack
 pkgver=3.6.7
 pkgrel=1
-pkgdesc='A single player dungeon exploration game. QT version with tiles from Geoduck'
+pkgdesc="A single player dungeon exploration game. QT version with Geoduck's tiles"
 arch=('i686' 'x86_64')
 url="http://www.nethack.org/index.html"
 license=('custom')
@@ -18,7 +18,6 @@ depends=('gzip' 'ncurses' 'qt5-base' 'qt5-multimedia' 'libxaw' 'libxt' 'libx11')
 makedepends=('xorg-mkfontscale' 'xorg-bdftopcf')
 conflicts=('nethack' 'nethack-qt' 'nethack-x11')
 provides=('nethack')
-# 'libxmu' 'libxext'
 source=("https://nethack.org/download/${pkgver}/${_pkgname}-${pkgver//./}-src.tgz"
   "http://www.geoduckthings.net/nhack/geoduck25x15-2017.bmp"
   "http://www.geoduckthings.net/nhack/geoduck50x30-2017.bmp"
@@ -54,7 +53,6 @@ prepare() {
     -e '/^DIRPERM\s*=/ s|0755|0775|' -i sys/unix/Makefile.top
 
   sed -e "/^MANDIR\s*=/s|/usr/man/man6|$pkgdir/usr/share/man/man6|" -i sys/unix/Makefile.doc
-
 }
 
 build() {
@@ -86,5 +84,4 @@ package() {
 
   install -Dm644 doc/Guidebook.txt "$pkgdir"/usr/share/doc/nethack-qt/Guidebook.txt
   install -Dm644 dat/license "$pkgdir"/usr/share/licenses/nethack-qt/LICENSE
-
 }
