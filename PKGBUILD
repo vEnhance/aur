@@ -22,9 +22,9 @@ depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' '
          'alsa-lib' 'libpulse' 'ffmpeg' 'libmad' 'libogg' 'libvorbis' 'libjpeg' 'libpng'
          'gtk3' 'libtommath' 'libtomcrypt' 'jsoncpp' 'pcre' 'zlib')
 makedepends=('cmake')
-source=("https://github.com/stepmania/stepmania/archive/$_pkgver.tar.gz"
-        "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-        "https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
+source=("$pkgname-$_pkgver.tar.gz::https://github.com/stepmania/stepmania/archive/$_pkgver.tar.gz"
+        "$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch::https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+        "$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch::https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
         "ffmpeg-7.patch"
         "ffmpeg-remove-asm-requirement.patch"
         "stepmania.sh")
@@ -37,8 +37,8 @@ sha256sums=('7d0e0d4b13f780fc6181561b257d9cd8a3ef73df513f4b8f36743acebb63a130'
 
 prepare() {
   cd "$srcdir/$pkgname-$_pkgver"
-  patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-  patch -Np1 -i "$srcdir/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
+  patch -Np1 -i "$srcdir/$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+  patch -Np1 -i "$srcdir/$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
   patch -Np1 -i "$srcdir/ffmpeg-7.patch"
   patch -Np1 -i "$srcdir/ffmpeg-remove-asm-requirement.patch"
 }
