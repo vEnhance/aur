@@ -25,8 +25,8 @@ makedepends=('cmake')
 provides=('stepmania')
 conflicts=('stepmania')
 source=("git+https://github.com/stepmania/stepmania.git"
-        "https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-        "https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
+        "$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch::https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+        "$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch::https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
         "ffmpeg-7.patch"
         "ffmpeg-remove-asm-requirement.patch"
         "stepmania.sh")
@@ -44,8 +44,8 @@ pkgver() {
 
 prepare() {
   cd "$srcdir/$_pkgname"
-  patch -Np1 -i "$srcdir/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-  patch -Np1 -i "$srcdir/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
+  patch -Np1 -i "$srcdir/$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+  patch -Np1 -i "$srcdir/$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
   patch -Np1 -i "$srcdir/ffmpeg-7.patch"
   patch -Np1 -i "$srcdir/ffmpeg-remove-asm-requirement.patch"
 }
