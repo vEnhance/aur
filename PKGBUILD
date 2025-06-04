@@ -1,4 +1,5 @@
-# Maintainer: neeshy <neeshy@tfwno.gf>
+# Maintainer: Marcin Kolesinski <m dot kolesinski at gmail dot com>
+# Contributor: neeshy <neeshy@tfwno.gf>
 # Contributor: Evan Chen <evan@evanchen.cc>
 # Contributor: éclairevoyant
 # Contributor: Devin J dot  Pohly <djpohly+arch at gmail dot com>
