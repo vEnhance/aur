@@ -1,5 +1,5 @@
-# Maintainer: neeshy <neeshy@tfwno.gf>
 # Maintainer: Marcin Kolesinski <m dot kolesinski at gmail dot com>
+# Contributor: neeshy <neeshy@tfwno.gf>
 # Contributor: Hugo Osvaldo Barrera <hugo@barrera.io>
 # Contributor: Kevin Puertas <kevinpr@jkanetwork.com>
 # Contributor: Nascher <kevin@nascher.org>
