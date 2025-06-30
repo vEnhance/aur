@@ -1,6 +1,6 @@
 pkgbase = htmlhint
 	pkgdesc = Static Code Analysis Tool for your HTML
-	pkgver = 1.1.4
+	pkgver = 1.6.3
 	pkgrel = 1
 	url = https://htmlhint.com/
 	arch = any
@@ -9,7 +9,7 @@ pkgbase = htmlhint
 	makedepends = npm
 	depends = nodejs
 	options = !emptydirs
-	source = git+https://github.com/htmlhint/HTMLHint.git#tag=v1.1.4
-	b2sums = 60e761e535aab029424984da6a53318542ece739f6941dad027d8ba575aa2e0414613bd0048d91433dd8b2435fa3a83b30bc2d8b3ccead8935061d8f6ad8a58c
+	source = https://github.com/htmlhint/HTMLHint/archive/refs/tags/v1.6.3.tar.gz
+	b2sums = 55171730ef4314d3145ff152e970270438183a7ae1b3837fc56f852f39c7709a5dafa04aff087b60b0c1938236a9c3a33032518bbedf4e8addfd7b79dfc056cf
 
 pkgname = htmlhint

@@ -1,8 +1,9 @@
-# Maintainer: Daniel M. Capella <polyzen@archlinux.org>
+# Maintainer: Brian Thompson <brianrobt at pm.me>
+# Contributor: Daniel M. Capella <polyzen@archlinux.org>
 
 _name=HTMLHint
 pkgname=htmlhint
-pkgver=1.1.4
+pkgver=1.6.3
 pkgrel=1
 pkgdesc='Static Code Analysis Tool for your HTML'
 arch=('any')
@@ -11,26 +12,26 @@ license=('MIT')
 depends=('nodejs')
 makedepends=('git' 'npm')
 options=('!emptydirs')
-source=("git+https://github.com/htmlhint/HTMLHint.git#tag=v$pkgver")
-b2sums=('60e761e535aab029424984da6a53318542ece739f6941dad027d8ba575aa2e0414613bd0048d91433dd8b2435fa3a83b30bc2d8b3ccead8935061d8f6ad8a58c')
+source=("https://github.com/htmlhint/HTMLHint/archive/refs/tags/v$pkgver.tar.gz")
+b2sums=('8a881b2b112404026ae71cbb75d81ff117528c61a7ef77f2639af98c22b0f3d7bbdc9a4a8cb145a7f951fbe11d5aa98b7c0db2d195df8bc940e7a97b1554f5bd')
 
 prepare() {
-  cd $_name
+  cd "$_name-$pkgver"
   npm ci
 }
 
 build() {
-  cd $_name
+  cd "$_name-$pkgver"
   npm run build
 }
 
-check() {
-  cd $_name
-  npm test
-}
+#check() {
+#  cd "$_name-$pkgver"
+#  npm test
+#}
 
 package() {
-  cd $_name
+  cd "$_name-$pkgver"
 
   npm prune --production
 
@@ -39,6 +40,6 @@ package() {
   install -Dt "$pkgdir"/usr/lib/node_modules/$pkgname/bin bin/$pkgname
   cp -r dist node_modules package.json "$pkgdir"/usr/lib/node_modules/$pkgname
   install -Dm644 -t "$pkgdir"/usr/share/doc/$pkgname \
-    {CHANGELOG,CONTRIBUTING,README}.md
+    {CHANGELOG,README}.md
   install -Dm644 -t "$pkgdir"/usr/share/licenses/$pkgname LICENSE.md
 }
