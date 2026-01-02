@@ -14,29 +14,33 @@
 _pkgname=stepmania
 pkgname="$_pkgname-git"
 pkgver=latest
-pkgrel=5
+pkgrel=6
 pkgdesc="Advanced rhythm game. Designed for both home and arcade use."
 arch=(x86_64)
 url="http://www.stepmania.com/"
 license=('MIT AND CC-BY-NC-4.0')
 depends=('mesa' 'glew' 'glu' 'udev' 'libx11' 'libxext' 'libxtst' 'libxinerama' 'libxrandr'
-         'alsa-lib' 'libpulse' 'ffmpeg' 'libmad' 'libogg' 'libvorbis' 'libjpeg' 'libpng'
-         'gtk3' 'libtommath' 'libtomcrypt' 'jsoncpp' 'pcre' 'zlib')
+  'alsa-lib' 'libpulse' 'ffmpeg' 'libmad' 'libogg' 'libvorbis' 'libjpeg' 'libpng'
+  'gtk3' 'libtommath' 'libtomcrypt' 'jsoncpp' 'pcre' 'zlib')
 makedepends=('cmake')
 provides=('stepmania')
 conflicts=('stepmania')
 source=("git+https://github.com/stepmania/stepmania.git"
-        "$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch::https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
-        "$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch::https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
-        "ffmpeg-7.patch"
-        "ffmpeg-remove-asm-requirement.patch"
-        "stepmania.sh")
+  "$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch::https://github.com/stepmania/stepmania/commit/3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
+  "$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch::https://github.com/stepmania/stepmania/commit/e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
+  "ffmpeg-7.patch"
+  "ffmpeg-8.patch"
+  "libtom-use-pkgconfig.patch"
+  "ffmpeg-remove-asm-requirement.patch"
+  "stepmania.sh")
 sha256sums=('SKIP'
-            'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
-            'b04bc15cbe85a41117220fadbadce5aa0893582fa8d720697ee6b864f7f0c093'
-            'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
-            'ae8d9911eaf7680d7f05a5bafa98588a1582f9b7713a295a66603a2ca8b5addf'
-            'e2caeb91fccaba9502273fba875355b516e821e6754b2238a20cb7c31f3c4a60')
+  'fe3c77293d65b654c91d419ba7421feb2ad2da8e4561fadc5f02b3bd0f791634'
+  'b04bc15cbe85a41117220fadbadce5aa0893582fa8d720697ee6b864f7f0c093'
+  'f6406a9daa61f53a530402965cfc9533f9836d558026b0fc5627db05f8cde068'
+  'f6dd2f33ff89c56728df15d808a7853c27c82aad774ff63e231983906656619c'
+  '490c8a8eb89e637ddfdaefec4d6212e8607d94580ae99d8069b26559d0ecdbe5'
+  'ae8d9911eaf7680d7f05a5bafa98588a1582f9b7713a295a66603a2ca8b5addf'
+  'e2caeb91fccaba9502273fba875355b516e821e6754b2238a20cb7c31f3c4a60')
 
 pkgver() {
   cd "$srcdir/$_pkgname"
@@ -48,6 +52,9 @@ prepare() {
   patch -Np1 -i "$srcdir/$pkgname-3fef5ef60b7674d6431f4e1e4ba8c69b0c21c023.patch"
   patch -Np1 -i "$srcdir/$pkgname-e0d2a5182dcd855e181fffa086273460c553c7ff.patch"
   patch -Np1 -i "$srcdir/ffmpeg-7.patch"
+  patch -Np1 -i "$srcdir/ffmpeg-8.patch"
+  # wtf why does this use CRLF endings??
+  sed -i 's/\r$//' $srcdir/$_pkgname/extern/CMakeProject-tomcrypt.cmake
   patch -Np1 -i "$srcdir/ffmpeg-remove-asm-requirement.patch"
 }
 
@@ -68,6 +75,9 @@ build() {
     -DWITH_SYSTEM_JSONCPP=YES \
     -DWITH_SYSTEM_PCRE=YES \
     -DWITH_SYSTEM_ZLIB=YES \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations" \
+    -DWITH_GTK3=no \
     -Wno-dev \
     ..
   make
